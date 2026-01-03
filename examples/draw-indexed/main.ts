@@ -1,11 +1,27 @@
 import '../style.css'
-import { WebGLContext } from '../../src/backends/webgl'
+import { GLContext, GLDevice } from '../../src/backends/webgl'
 
 function render(
   $canvas: HTMLCanvasElement
 ) {
-  const context = new WebGLContext($canvas);
+  const context = new GLContext($canvas);
   const device = context.getDevice();
+  const program = device.createProgram({
+    vertex: `
+layout(location = 0) in vec2 position;
+
+void main() {
+  gl_Position = vec4(position, 0.0, 1.0);
+} 
+    `,
+    fragment: `
+out vec4 outputColor;
+
+void main() {
+  outputColor = vec4(1.0, 0.0, 0.0, 1.0);
+}
+    `
+  });
 }
 
 function main() {

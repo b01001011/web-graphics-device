@@ -1,2 +1,3 @@
-export * from './WebGLContext'
-export * from './WebGLDevice'
+export * from './GLContext'
+export * from './GLDevice'
+export * from './GLProgram'
