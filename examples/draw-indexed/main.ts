@@ -1,11 +1,12 @@
 import '../style.css'
 import { GLContext, GLDevice } from '../../src/backends/webgl'
+import { BufferUsage } from '../../src/core';
 
 function render(
   $canvas: HTMLCanvasElement
 ) {
-  const context = new GLContext($canvas);
-  const device = context.getDevice();
+  const context = new GLContext($canvas)
+  const device = context.getDevice()
   const program = device.createProgram({
     vertex: `
 layout(location = 0) in vec2 position;
@@ -21,7 +22,21 @@ void main() {
   outputColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
     `
-  });
+  })
+
+  const vertexBuffer = device.createBuffer({
+    view: new Float32Array([0, 0.5, -0.5, -0.5, 0.5, -0.5, 1, 0.5]),
+    usage: BufferUsage.VERTEX
+  })
+
+  const indexBuffer = device.createBuffer({
+    view: new Uint32Array([0, 1, 2, 0, 2, 3]),
+    usage: BufferUsage.INDEX
+  })
+
+  return () => {
+    program.dispose();
+  }
 }
 
 function main() {
@@ -29,7 +44,7 @@ function main() {
   const $container = document.createElement('div')
   const $canvas = document.createElement('canvas')
 
-  $container.innerHTML = '';
+  $container.innerHTML = ''
 
   $canvas.width = 720 * window.devicePixelRatio
   $canvas.height = 480 * window.devicePixelRatio

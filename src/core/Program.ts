@@ -1,4 +1,5 @@
 export interface Program {
+  dispose: () => void
 }
 
 export interface ProgramDescriptor {
