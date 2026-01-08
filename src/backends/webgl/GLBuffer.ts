@@ -7,17 +7,17 @@ export class GLBuffer implements Buffer {
   #glBufferType: GLenum
   #glBuffers: WebGLBuffer[]
 
-  constructor({
-    device,
-    descriptor
-  }: {
-    device: GLDevice
+  #glBufferMaxSize: number
+
+  constructor(
+    device: GLDevice,
     descriptor: BufferDescriptor
-  }) {
+  ) {
     const { view, usage } = descriptor
     const gl = device.getGL()
 
     this.#glBuffers = [];
+    this.#glBufferMaxSize = device.getUniformBufferMaxSize()
 
     switch(usage) {
       case BufferUsage.INDEX:
@@ -32,17 +32,16 @@ export class GLBuffer implements Buffer {
         break
       case BufferUsage.UNIFORM:
         this.#glBufferType = gl.UNIFORM_BUFFER
-        const uniformBufferMaxSize = device.getUniformBufferMaxSize()
         let remaining = view.byteLength;
         while(remaining > 0) {
           this.#glBuffers.push(
             this.createGLBuffer(
               gl,
-              Math.min(remaining, uniformBufferMaxSize),
+              Math.min(remaining, this.#glBufferMaxSize),
               this.#glBufferType
             ),
           )
-          remaining -= uniformBufferMaxSize;
+          remaining -= this.#glBufferMaxSize;
         }
         break
     }
@@ -90,5 +89,9 @@ export class GLBuffer implements Buffer {
       gl.bindBuffer(bufferType, buffer)
       gl.bufferData(bufferType, byteLength, gl.STATIC_DRAW)
       return buffer
+  }
+
+  getGLBuffer(offset: number) {
+    return this.#glBuffers[(offset / this.#glBufferMaxSize) | 0];
   }
 }

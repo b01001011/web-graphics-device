@@ -1,6 +1,10 @@
 import '../style.css'
-import { GLContext, GLDevice } from '../../src/backends/webgl'
-import { BufferUsage } from '../../src/core';
+import { 
+  BufferUsage,
+  Format,
+  GLContext, 
+  GLDevice
+} from '../../src'
 
 function render(
   $canvas: HTMLCanvasElement
@@ -34,8 +38,13 @@ void main() {
     usage: BufferUsage.INDEX
   })
 
+  const inputLayout = device.createInputLayout({
+    program,
+    indexBufferFormat: Format.U32,
+  })
+
   return () => {
-    program.dispose();
+    program.dispose()
   }
 }
 

@@ -1,11 +1,12 @@
 import type { Program, ProgramDescriptor } from '../../core'
+import { GLDevice } from './GLDevice'
 
 export class GLProgram implements Program {
   #handle: WebGLProgram
   #gl: WebGL2RenderingContext
 
-  constructor(gl: WebGL2RenderingContext, descriptor: ProgramDescriptor) {
-    this.#gl = gl
+  constructor(device: GLDevice, descriptor: ProgramDescriptor) {
+    this.#gl = device.getGL()
     this.#handle = this.#gl.createProgram()
 
     const { vertex, fragment } = descriptor
@@ -34,7 +35,7 @@ export class GLProgram implements Program {
   }
 
   get handle() {
-    return this.#handle;
+    return this.#handle
   }
 
   dispose() {

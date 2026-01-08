@@ -1,3 +1,5 @@
 export * from './GLContext'
 export * from './GLDevice'
 export * from './GLProgram'
+export * from './GLRenderPipeline'
+export * from './GLTexture'
