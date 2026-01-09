@@ -23,13 +23,16 @@ import { GLRenderPipeline } from './GLRenderPipeline'
 import { GLTexture } from './GLTexture'
 
 export class GLDevice implements Device {
-  #dummyVertexBuffer: Buffer
   #gl: WebGL2RenderingContext
+
+  #dummyVertexBuffer: Buffer
+  #currentVertexArrayObject: WebGLVertexArrayObject | null
   #uniformBufferMaxSize: number
 
   constructor(gl: WebGL2RenderingContext) {
     this.#gl = gl
 
+    this.#currentVertexArrayObject = null
     this.#uniformBufferMaxSize = Math.min(
       gl.getParameter(gl.MAX_UNIFORM_BLOCK_SIZE),
       0x10000
@@ -64,15 +67,22 @@ export class GLDevice implements Device {
   dispose() {
   }
 
-  getDummyVertexBuffer(): Buffer {
-    return this.#dummyVertexBuffer
-  }
-
   getGL(): WebGL2RenderingContext {
     return this.#gl
   }
+  get currentVertexArrayObject(): WebGLVertexArrayObject | null {
+    return this.#currentVertexArrayObject;
+  }
 
-  getUniformBufferMaxSize(): number {
+  set currentVertexArrayObject(object: WebGLVertexArrayObject | null) {
+    this.#currentVertexArrayObject = object;
+  }
+
+  get dummyVertexBuffer(): Buffer {
+    return this.#dummyVertexBuffer
+  }
+
+  get uniformBufferMaxSize(): number {
     return this.#uniformBufferMaxSize
   }
 }

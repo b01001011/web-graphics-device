@@ -6,5 +6,11 @@ export interface InputLayout {
 
 export interface InputLayoutDescriptor {
   program: Program,
-  indexBufferFormat: Format
+  indexBufferFormat: Format,
+  vertexBufferAttributes: VertexBufferAttribute[]
+}
+
+export interface VertexBufferAttribute {
+  format: Format
+  location: number
 }

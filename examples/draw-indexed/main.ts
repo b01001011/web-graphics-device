@@ -41,6 +41,10 @@ void main() {
   const inputLayout = device.createInputLayout({
     program,
     indexBufferFormat: Format.U32,
+    vertexBufferAttributes: [{
+      format: Format.F32,
+      location: 0
+    }]
   })
 
   return () => {

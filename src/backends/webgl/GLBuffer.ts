@@ -17,7 +17,7 @@ export class GLBuffer implements Buffer {
     const gl = device.getGL()
 
     this.#glBuffers = [];
-    this.#glBufferMaxSize = device.getUniformBufferMaxSize()
+    this.#glBufferMaxSize = device.uniformBufferMaxSize
 
     switch(usage) {
       case BufferUsage.INDEX:
@@ -53,7 +53,7 @@ export class GLBuffer implements Buffer {
     )
 
     const dstByteOffset = 0;
-    const maxBufferChunkSize = device.getUniformBufferMaxSize()
+    const maxBufferChunkSize = device.uniformBufferMaxSize
     const virtualByteOffsetEnd = dstByteOffset + byteView.byteLength;
     
     let srcByteOffset = 0;
