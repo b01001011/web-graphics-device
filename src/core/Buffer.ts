@@ -11,5 +11,4 @@ export const BufferUsage = {
   INDEX:        0x0002,
   UNIFORM:      0x0004,
 } as const
-
 export type BufferUsage = typeof BufferUsage[keyof typeof BufferUsage]

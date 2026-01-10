@@ -3,7 +3,11 @@ import {
   BufferUsage,
   Format,
   GLContext, 
-  GLDevice
+  GLDevice,
+  PixelFormat,
+  Primitive,
+  TextureDimension,
+  TextureUsage
 } from '../../src'
 
 function render(
@@ -46,6 +50,23 @@ void main() {
       location: 0
     }]
   })
+
+  const pipeline = device.createRenderPipeline({
+    inputLayout,
+    program,
+    primitive: Primitive.TRIANGLE
+  });
+
+  const renderTarget = device.createRenderTargetFromTexture(
+    device.createTexture({
+      width: $canvas.width,
+      height: $canvas.height,
+      pixelFormat: PixelFormat.RGBA8,
+      dimension: TextureDimension.TEXTURE_2D,
+      mipmapLevelCount: 1,
+      usage: TextureUsage.RENDER_TARGET
+    })
+  )
 
   return () => {
     program.dispose()

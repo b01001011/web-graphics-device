@@ -1,5 +1,6 @@
 import { 
-  Format
+  Format,
+  PixelFormat
 } from '../../core'
 
 export function translateFormatToGL(
@@ -15,6 +16,18 @@ export function translateFormatToGL(
       return { type: gl.UNSIGNED_INT, size: 4 }
     case Format.F32:
       return { type: gl.FLOAT, size: 4 }
+    default:
+      throw new Error('Error: Unknown format.')
+  }
+}
+
+export function translatePixelFormatToGL(
+    gl: WebGL2RenderingContext, 
+    format: PixelFormat
+): GLenum {
+  switch (format) {
+    case PixelFormat.RGBA8:
+      return gl.RGBA8
     default:
       throw new Error('Error: Unknown format.')
   }

@@ -26,12 +26,14 @@ export class GLDevice implements Device {
   #gl: WebGL2RenderingContext
 
   #dummyVertexBuffer: Buffer
+  #currentTexture: GLenum | null
   #currentVertexArrayObject: WebGLVertexArrayObject | null
   #uniformBufferMaxSize: number
 
   constructor(gl: WebGL2RenderingContext) {
     this.#gl = gl
 
+    this.#currentTexture = null
     this.#currentVertexArrayObject = null
     this.#uniformBufferMaxSize = Math.min(
       gl.getParameter(gl.MAX_UNIFORM_BLOCK_SIZE),
@@ -57,11 +59,11 @@ export class GLDevice implements Device {
   }
 
   createRenderPipeline(descriptor: RenderPipelineDescriptor): RenderPipeline {
-    return new GLRenderPipeline(descriptor)
+    return new GLRenderPipeline(this, descriptor)
   }
   
   createTexture(descriptor: TextureDescriptor): Texture {
-    return new GLTexture(descriptor)
+    return new GLTexture(this, descriptor)
   }
 
   dispose() {
@@ -72,6 +74,11 @@ export class GLDevice implements Device {
   }
   get currentVertexArrayObject(): WebGLVertexArrayObject | null {
     return this.#currentVertexArrayObject;
+  }
+
+  set currentTexture(texture: GLenum) {
+      this.#gl.activeTexture(texture);
+      this.#currentTexture = texture;
   }
 
   set currentVertexArrayObject(object: WebGLVertexArrayObject | null) {
