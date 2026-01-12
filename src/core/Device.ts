@@ -2,6 +2,7 @@ import type { Buffer, BufferDescriptor } from './Buffer'
 import type { InputLayout, InputLayoutDescriptor } from './InputLayout'
 import type { Program, ProgramDescriptor } from './Program'
 import type { RenderPipeline, RenderPipelineDescriptor } from './RenderPipeline'
+import type { RenderTarget, RenderTargetDescriptor } from './RenderTarget'
 import type { Texture, TextureDescriptor } from './Texture'
 
 export interface Device {
@@ -9,5 +10,6 @@ export interface Device {
   createInputLayout: (descriptor: InputLayoutDescriptor) => InputLayout
   createProgram: (descriptor: ProgramDescriptor) => Program
   createRenderPipeline: (descriptor: RenderPipelineDescriptor) => RenderPipeline
+  createRenderTarget: (decriptor: RenderTargetDescriptor) => RenderTarget
   createTexture: (desriptor: TextureDescriptor) => Texture
 }

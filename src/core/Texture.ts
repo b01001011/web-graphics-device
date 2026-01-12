@@ -1,5 +1,6 @@
 import { PixelFormat } from './Format'
 export interface Texture {
+  dispose: () => void
 }
 
 export interface TextureDescriptor {

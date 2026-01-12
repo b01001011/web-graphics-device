@@ -57,8 +57,7 @@ void main() {
     primitive: Primitive.TRIANGLE
   });
 
-  const renderTarget = device.createRenderTargetFromTexture(
-    device.createTexture({
+  const texture = device.createTexture({
       width: $canvas.width,
       height: $canvas.height,
       pixelFormat: PixelFormat.RGBA8,
@@ -66,7 +65,13 @@ void main() {
       mipmapLevelCount: 1,
       usage: TextureUsage.RENDER_TARGET
     })
-  )
+
+  const renderTarget = device.createRenderTarget({
+      width: $canvas.width,
+      height: $canvas.height,
+      pixelFormat: PixelFormat.RGBA8,
+      texture
+  })
 
   return () => {
     program.dispose()

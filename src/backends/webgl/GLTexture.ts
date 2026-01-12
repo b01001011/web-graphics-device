@@ -23,6 +23,7 @@ export class GLTexture implements Texture {
     this.#device.currentTexture = gl.TEXTURE0
 
     if(descriptor.dimension === TextureDimension.TEXTURE_2D) {
+      gl.bindTexture(gl.TEXTURE_2D, this.#glTexture)
       if(descriptor.usage == TextureUsage.RENDER_TARGET) {
         gl.texStorage2D(
           gl.TEXTURE_2D,
@@ -33,5 +34,10 @@ export class GLTexture implements Texture {
         )
       }
     }
+  }
+
+  dispose() {
+    const gl = this.#device.getGL()
+    gl.deleteTexture(this.#glTexture)
   }
 }

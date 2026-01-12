@@ -8,6 +8,8 @@ import type {
   ProgramDescriptor,
   RenderPipeline,
   RenderPipelineDescriptor,
+  RenderTarget,
+  RenderTargetDescriptor,
   Texture,
   TextureDescriptor
 } from '../../core'
@@ -20,6 +22,7 @@ import { GLBuffer } from './GLBuffer'
 import { GLInputLayout } from './GLInputLayout'
 import { GLProgram } from './GLProgram'
 import { GLRenderPipeline } from './GLRenderPipeline'
+import { GLRenderTarget } from './GLRenderTarget'
 import { GLTexture } from './GLTexture'
 
 export class GLDevice implements Device {
@@ -60,6 +63,10 @@ export class GLDevice implements Device {
 
   createRenderPipeline(descriptor: RenderPipelineDescriptor): RenderPipeline {
     return new GLRenderPipeline(this, descriptor)
+  }
+
+  createRenderTarget(descriptor: RenderTargetDescriptor): RenderTarget {
+    return new GLRenderTarget(this, descriptor);
   }
   
   createTexture(descriptor: TextureDescriptor): Texture {

@@ -1,6 +1,6 @@
-import type { InputLayout } from './InputLayout'
-import type { Primitive } from './Primitive'
-import type { Program } from './Program'
+import { type InputLayout } from './InputLayout'
+import { type Primitive } from './Primitive'
+import { type Program } from './Program'
 
 export interface RenderPipeline {
 }
